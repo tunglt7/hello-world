@@ -1,0 +1,18 @@
+  
+language: python
+dist: trusty
+sudo: required
+services:
+- docker
+
+before_install:
+  - echo $DOCKER_HOST
+
+script:
+  - pip install ansible-container[docker]
+  - pip install ansible
+  - ansible-container --debug build
+  - ansible-container --debug run
+  - docker images
+  - docker ps -a
+  - ansible-playbook -vvv run-tests.yml
